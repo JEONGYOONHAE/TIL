@@ -74,3 +74,182 @@
     - 실행 가능성 검사
     - 해 검사 
   - 거스름돈 줄이기
+
+
+
+- 2차원 배열
+
+  - 델타를 이용한 2차 배열 탐색
+
+  ```python
+  # 2차 배열의 한 좌표에서 4방향 인접 배열 요소 탐색 방법
+  
+  arr[][] # nxn 배열
+  # 방향 : 상하좌우
+  di[-1, 1, 0, 0]
+  dj[0, 0, -1, 1]
+  
+  for i in range(1, n-1):
+      for j in range(1, n-1):
+          for k in range(4):	# 4방향
+              ni = i + di[k]
+              nj = j + dj[k]
+              if 0 <= ni < n and 0 <= nj < n:
+                  print(arr[ni][nj])
+  ```
+
+  - 전치 행렬
+
+  ```python
+  arr[[],[],[]]	# 3x3 행렬
+  for i in range(3):
+      for j in range(3):
+          if i < j:
+              arr[i][j], arr[j][i] = arr[j][i], arr[i][j]
+  ```
+
+
+
+- 부분집합 (Subset Sum)
+
+  - 부분집합의 수 : 원소가 n개일 때, 공집합을 포함한 부분집합의 개수는 2^n
+
+  ``` python
+  bit = [0]*4
+  for i in range(2):
+      bit[0] = i
+      for j in range(2):
+          bit[1] = j
+          for k in range(2):
+              bit[2] = k
+              for l in range(2):
+                  bit[3] = l
+                  print_subset(bit)
+  ```
+
+  - 비트 연산자
+
+    - << : 피연산자의 비트 열을 왼쪽으로 이동시킨다. (반대도 있음)
+
+      1 << n : 2^n, 원소가 n개일 경우 모든 부분집합의 수를 의미
+
+    - & : 비트 단위로 AND 연산을 한다.
+
+      i & (1 << j) : i의 j번째 비트가 1인지 아닌지를 검사
+
+    ``` python
+    arr = [1, 2, 3, 4, 5]
+    n = len(arr)
+    for i in range(1<<n):	# 1<<n : 부분집합의 개수
+        for j in range(n):	# 원소의 수만큼 비트를 비교
+            if i & (1<<j):	# i의 j번 비트가 1인 경우
+                print(arr[j], end=', ')	# j번 원소 출력
+        print()
+    print()
+    ```
+
+
+
+- 순차 검색 (Sequential Search)
+
+  - 가장 간단하고 직관적 방법
+
+  - 알고리즘이 단순해서 구현이 쉽지만, 대상의 수가 많은 겨우 비효율적임
+
+  - 정렬되어 있지 않은 경우 
+
+    - 찾고자 하는 원소의 순서에 따라 비교회수가 결정됨
+    - 시간복잡도 O(n)
+
+    ```python
+    def sequentialSearch(a, n, key):	
+        # a : 검색 배열, n : 배열의 길이 , key : 찾고자하는 값
+        i = 0
+        # i가 배열의 범위에 있고 찾는 key값이 없는 경우 i += 1 
+        while i < n and a[i] != key:
+            i += 1
+        # while문 종료 후 i의 값을 보고 return
+        if i < n:
+            return i
+        else:
+            return -1
+    ```
+
+  - 정렬되어 있는 경우 (오름차순으로 정렬 됐다고 가정)
+
+    - 정렬이 되어있으므로, 검색 실패를 반환하는 경우 평균 비교 회수가 반으로 줄어듬
+
+    ```python
+    def sequentialSearch(a, n, key):	
+        # a : 검색 배열, n : 배열의 길이 , key : 찾고자하는 값
+        i = 0
+        # a[i] > key 의 경우 찾는 원소가 없는 것이므로 검색 종료
+        while i < n and a[i] < key:
+            i += 1
+        # while문 종료 후 i의 값을 보고 return
+        if i < n:
+            return i
+        else:
+            return -1
+    ```
+
+
+
+- 이진 검색 (Binary Search)
+
+  - 자료의 가운데에 있는 항목의 키 값과 비교하여 다음 검색의 위치를 결정하고 검색을 진행
+  - 검색 범위를 반으로 줄여가면서 보다 빠르게 검색 수행
+  - 이진 검색을 하기 위해서는 자료가 정렬된 상태여야 함
+
+  ```python
+  def binarySearch(a, n, key):
+      start = 0
+      end = n-1
+      while start <= end:
+          middle = (start + end) // 2
+          if a[middle] == key:	# 검색 성공
+              return True
+          elif a[middle] > key:
+              end = middle -1		# 자신을 포함하지 않고 -1, +1
+          elif a[middle] < key:
+              start = middle +1
+      return False				# 검색 실패
+  ```
+
+  - 재귀함수를 이용한 이진 검색
+
+  ```python
+  def binarySearch(a, low, high, key):
+      if low > high:	# 검색 실패
+          return False
+      else:
+          middle = (low + high) // 2
+          if key == a[middle]:
+              return True		# 검색 성공
+          elif key < a[middle]:
+              return binarySearch(a, low, middle-1, key)
+          elif key < a[middle]:
+              return binarySearch(a, middle+1, high, key)
+  ```
+
+
+
+- 선택 정렬 (Selection Sort)
+
+  - 주어진 자료 중 가장 작은 값의 원소부터 차례대로 선택하여 위치 교환
+  - 시간 복잡도 : O(n2)
+
+  ```python
+  def SelectionSort(a, n):
+      for i in range(n-1):	
+  # 미정렬원소가 하나 남은 상황에서는 마지막 원소가 가장 큰 값을 가지게 되므로, 실행 종료, 선택 정렬 완성
+          mididx = i
+          for j in range(i+1, n):
+              if a[middle] > a[j]:
+                  mididx = j
+          a[i], a[mididx] = a[mididx], a[i]
+      return a
+      # return arr[k-1] : k번째로 작은 원소를 찾음
+  ```
+
+  
