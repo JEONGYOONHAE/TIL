@@ -251,20 +251,28 @@
 6. HTTP (HyperText Tranfer Protocol)
 
 - 웹에서 이루어지는 모든 데이터 교환의 기초
+
 - 주어진 리소스가 수행 할 작업을 나타내는 request methods를 정의
+
 - GET, POST, PUT, DELETE, ...
+
 - GET : 서버로부터 __정보__를 __조회__하는데 사용
   - 데이터를 가져올 때만 사용해야 함
   - 데이터를 서버로 전송할 때 body가 아닌 Query String Parameters를 통해 전송
   - 우리는 서버에 요청을 하면 HTML 문서 파일 한 장을 받는데, 이때 사용하는 요청의 방식이 GET
+  
+  
 
 ## URL Variable Routing
 
 - 웹 애플리케이션은 url을 통한 클라이언트의 요청에서부터 시작됨
-
 - url 주소를 변수로 사용하는 것
 - url의 일부를 변수로 지정하여 view 함수의 인자로 넘길 수 있음
 - 즉, 변수 값에 따라 하나의 path에 여러 페이지를 연결 시킬 수 있음
+
+![urls](https://user-images.githubusercontent.com/94509971/159160810-d635ad24-4806-481c-b728-10671711d132.PNG)
+
+
 
 1. URL Path converters
 
