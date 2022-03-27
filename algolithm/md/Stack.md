@@ -155,3 +155,75 @@ memo = [0, 1]
   - 상태 공간 트리의 깊이 우선 검색을 실시
   - 각 노드가 유망한지를 점검
   - 만일 그 노드가 유망하지 않으면, 그 노드의 부모 노드로 돌아가서 검색을 계속
+- 일반 백트래킹 알고리즘
+
+``` python
+def checknode(v):
+    if promising(v):
+        if there is a solution at v:
+            write the solution
+        else:
+            for u in each child of v:
+                checknode(u)
+```
+
+12. 부분집합 구하기
+
+- 어떤 집합의 공집합과 자기자신을 포함한 모든 부분집합을 powerset이라고 하며,
+  구하고자 하는 어떤 집합의 원소 개수가 n일 경우 부분집합의 개수는 2^n개 이다.
+- 부분집합 생성하기
+
+```python 
+# 각 원소가 부분집합에 포함되었는지를 loop 이용하여 확인하고 부분집합을 생성
+bit = [0, 0, 0, 0]
+for i in range(2):
+    bit[0] = i
+    for j in range(2):
+        bit[1] = j
+        for k in range(2):
+            bit[2] = k
+            for l in range(2):
+                bit[3] = l
+                print(bit)
+```
+
+- powerset을 구하는 백트래킹 알고리즘
+
+```python 
+def backtrack(a, k, input):
+    global MAXCANDIDATES
+    c = [0] * MAXCANDIDATES
+    if k == input:
+        proecss_solution(a, k)
+    else:
+        k += 1
+        ncandidates = construct_candidates(a, k, input, c)
+        for i in range(ncandidates):
+            a[k] = c[i]
+            backtrack(a, k, input)
+            
+def construct_candidates(a, k, input, c):
+    c[0] = True
+    c[1] = False
+    return 2
+MAXCANDIDATES = 2
+NMAX = 4
+a = [0] * NMAX
+backtrack(a, 0, 3)
+```
+
+13. 분할정복
+
+- 거듭제곱 : O(n)
+
+```python
+def Power(base, exponent):
+    if base == 0:
+        return 1
+    result = 1
+    for i in range(exponent):
+        result *= base
+    return result 
+```
+
+- O(log2n)
