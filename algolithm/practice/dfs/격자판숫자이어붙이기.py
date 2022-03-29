@@ -1,3 +1,4 @@
+# 03/25 격자판의 숫자 이어 붙이기
 def DFS(n, ci, cj, num):
     if n == 7:
         sset.add(num)

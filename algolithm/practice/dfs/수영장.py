@@ -1,3 +1,4 @@
+# 03/25 [모의 SW 역량테스트] 수영장
 def DFS(n, ssum):
     global ans
     if n > 12:
