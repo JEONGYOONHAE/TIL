@@ -1,44 +1,33 @@
-decode = {'112': 0, '122': 1, '221': 2, '114': 3,
-          '231': 4, '132': 5, '411': 6, '213': 7,
-          '312': 8, '211': 9}
-dic = {'0': '0000', '1': '0001', '2': '0010',
-       '3': '0011', '4': '0100', '5': '0101',
-       '6': '0110', '7': '0111', '8': '1000',
-       '9': '1001', 'A': '1010', 'B': '1011',
-       'C': '1100', 'D': '1101', 'E': '1110', 'F': '1111'}
-T = int(input())
-for tc in range(1, T+1):
-    N, M = map(int, input().split())
-    arr = [input()[:M] for _ in range(N)]
-    bl = [''] * N
-    for i in range(N):
-        for j in range(M):
-            bl[i] += dic[arr[i][j]]
-    result = []
-    visited = []
-    ans = 0
-    for y in range(N):
-        a = b = c = 0
-        for x in range(M * 4 - 1, -1, -1):
-            if b == 0 and c == 0 and bl[y][x] == '1':
-                a += 1
-            elif a > 0 and c == 0 and bl[y][x] == '0':
-                b += 1
-            elif a > 0 and b > 0 and bl[y][x] == '1':
-                c += 1
+for _ in range(1, 11):
+    # test case, 길의 총 개수
+    tc, v = map(int, input().split())
+    # 간선정보를 리스트로 입력받음
+    lst = list(map(int, input().split()))
+    # 간선정보를 노드별로 입력할 딕셔너리
+    arr = {x:[] for x in range(100)}
+    for i in range(0, v*2, 2):
+        v = lst[i]
+        e = lst[i+1]
+        arr[v].append(e)
+    stack = [0]     # 0에서 시작하기 때문에 0을 넣고 출발
+    visited = [0]*100
+    visited[0] = 1  # 0에서 시작하므로 0 방문 경험 있음
+    answer = 0      # 결과값
+    while stack:
+        now = stack.pop()
+        for n in arr[now]:
+            # 99로 가는 길이 있으면 성공
+            if n == 99:
+                answer = 1
+                break
+            # 방문경험이 없으면 stack과 visited에 추가하고 계속 진행
+            if not visited[n]:
+                stack.append(n)
+                visited[n] = 1
 
-            if a > 0 and b > 0 and c > 0 and bl[y][x] == '0':
-                minalpha = min(a, b, c)
-                plus = decode[str(a//minalpha) + str(b//minalpha) + str(c//minalpha)]
-                result.append(plus)
-                a = b = c = 0
-            if len(result) == 8:
-                result = result[::-1]
-                value = (result[0] + result[2] + result[4] + result[6]) * 3 + \
-                        (result[1] + result[3] + result[5]) + result[7]
-                if value % 10 == 0 and result not in visited:
-                    ans += sum(result)
-                visited.append(result)
-                result = []
+    print(f'#{tc} {answer}')
 
-    print(f'#{tc} {result}')
+
+
+
+
