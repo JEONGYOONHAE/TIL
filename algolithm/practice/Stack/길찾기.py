@@ -1,3 +1,5 @@
+# 02/22
+# [S/W 문제해결 기본] 4일차 - 길찾기
 for _ in range(1, 11):
     # test case, 길의 총 개수
     tc, v = map(int, input().split())
