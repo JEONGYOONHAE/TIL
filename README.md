@@ -41,7 +41,6 @@
 
 | 날짜     | 분류         | 내용                             |
 | -------- | ------------ | -------------------------------- |
-| 22.06.27 | vue/이론정리 | vue basic syntax와 SPA, CSR, SSR |
 | 22.06.28 | vue/이론정리 | vue  props & emit, router        |
-|          |              |                                  |
+| 22.06.27 | vue/이론정리 | vue basic syntax와 SPA, CSR, SSR |
 
