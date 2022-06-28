@@ -34,3 +34,14 @@
 | 22.0324   | algorithm / Stack        | SWEA stack 문제                                              | 2.22 문제 <br /> 반복문자 지우기,<br /> 그래프 경로          |
 | 22.03.09  | algorithm / List         | List.md<br />완전탐색 이용한 baby-gin <br />탐욕알고리즘을 이용한 baby-gin | 완전탐색과 그리드 부분의 이해가 더 필요<br />비트연산자 학습 더 필요 |
 | 22.03.20  | web / framework          | django md                                                    | 내용의 난이도는 높지 않지만 세부 내용이 많음                 |
+
+
+
+## Vue
+
+| 날짜     | 분류         | 내용                             |
+| -------- | ------------ | -------------------------------- |
+| 22.06.27 | vue/이론정리 | vue basic syntax와 SPA, CSR, SSR |
+| 22.06.28 | vue/이론정리 | vue  props & emit, router        |
+|          |              |                                  |
+

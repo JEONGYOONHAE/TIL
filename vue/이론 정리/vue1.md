@@ -1,3 +1,17 @@
+## Vue 목록
+
+- [SPA](#SPA)
+- [CSR](#CSR)
+- [SSR](#SSR)
+- [MVVM](#MVVM)
+- [Basic syntax](#Basic)
+- [Props](#Props)
+- [Emit](#Emit)
+- [Router](#Router)
+- 
+
+
+
 ## SPA (Single Page Application : 단일 페이지 어플)
 
 ​	: 현재 페이지를 __동적__으로 렌더링함으로써 사용자와 소통하는 웹 어플
@@ -128,7 +142,141 @@
    | 실제로 렌더링은 되지만 눈에서 보이지 않는 것이기 때문에 딱 한번만 렌더링이 되는 경우라면 v-if에 비해 상대적으로 렌더링 비용이 높음 | 화면에서 보이지 않을 뿐만 아니라 렌더링 자체가 되지 않기 때문에 렌더링 비용이 낮음 |
    | 자주 변경되는 요소라면 한 번 렌더링 된 이후부터는 보여주는지에 대한 여부만 판단하면 되기 때문에 토글 비용이 적음 | 자주 변경되는 요소의 경우 다시 렌더링 해야 하므로 비용이 증가할 수 있음 |
 
+
+
+
+## Props
+
+1. 부모 컴포넌트의 정보를 전달하기 위한 사용자 지정 특성
+
+2. 자식 컴포넌트는 props 옵션을 사용하여 수신하는 props를 명시적으로 선언 해야함
+
+3. 자식 컴포넌트의 템플릿에서 상위 데이터를 직접 참조할 수 없음
+
+4. Static Props
+
+   ```vue
+   // App.vue
+   <about my-message = "message"></about>
    
+   // About.vue
+   <template>
+   <h2>{{ myMessage }}</h2>
+   
+   <script>
+   props : {
+   	myMessage: String
+   }
+   ```
+
+5. Dynamic Props
+
+   ```vue
+   // App.vue
+   <about :parent-data="parentData">
+   
+   <script>
+   export default {
+       data : function() {
+           return {
+   			parentData : 'this is parent data'
+   			}
+   		}
+       }
+   </script>
+       
+   // About.vue
+   <template>
+   <h2>{{ parentData }}</h2>
+   
+   <script>
+   props : {
+   	parentData: String
+   }
+   ```
+
+6. 이름 컨벤션
+
+   - 선언 시 : __camelCase__
+   - HTML : __kebab-case__
+
+7. 컴포넌트의 __data는 반드시 함수여야 함__
+
+8. Static 구문을 사용하여 숫자를 전달하면 안됨 (문자열로 전달 됨)
+   v-bind를 사용해야 숫자로 전달 됨
+
+   ```
+   <comp some-prop="1"></comp> 문자열 "1"
+   <comp :some-prop="1"></comp> 숫자 1
+   ```
+
+9. 모든 props는 하위 속성과 상위 속성 사이의 __단방향__ 바인딩을 형성
+
+10. 부모의 속성이 변경되면 자식 속성에게 전달되지만, 반대 방향으로는 안됨
+
+
+
+## Emit (Listening to Child Components Events)
+
+1. $emit(eventName)
+   - 현재 인스턴스에서 이벤트를 트리거
+   - 추가 인자는 리스너의 콜백 함수로 전달
+2. 부모 컴포넌트는 자식 컴포넌트가 사용되는 템플릿에서 __v-on__을 사용하여 자식 컴포넌트가 보낸 이벤트를 청취 
+3. 이름 컨벤션
+   - 이벤트는 자동 대소문자 변환을 제공하지 않음
+   - v-on 이벤트 리스너는 항상 자동으로 소문자 변환되기 때문에 __항상 kebab-case를 사용하는 것을 권장__
+
+
+
+## Router
+
+1. 위치에 대한 최적의 경로를 지정하며, 이 경로를 따라 데이터를 다음 장치로 전향시키는 장치
+
+2. `router-link`
+
+   - 목표 경로는 'to' prop으로 지정
+   - HTML5 히스토리 모드에서 router-link는 클릭 이벤트를 차단하여 브라우저가 페이지를 다시 로드하지 않도록 함
+   - a 태그지만 GET 요청을 보내는 이벤트를 제거한 형태로 구성됨
+
+3. `router-view`
+
+   - 주어진 라우트에 대해 일치하는 컴포넌트를 렌더링하는 컴포넌트
+   - router-link를 클릭하면, 해당 경로와 연결되어 있는 index.js에 정의한 컴포넌트가 위치
+
+4. History mode
+
+   - 브라우저의 히스토리는 남기지만 실제 페이지는 이동하지 않는 기능을 지원
+   - 페이지를 다시 로드하지 않고 URL을 탐색할 수 있음 -> SPA의 단점 중 하나인 URL이 변경되지 않는 점을 해결
+   - history 객체는 사용자를 자신의 방문 기록 앞과 뒤로 보내거나, 기록의 특정 지점으로 이동하는 등 유용한 메서드와 속성을 가짐
+
+5. 프로그래밍 방식 네비게이션
+
+   - `router-link to ="..." === $router.push(...)`
+   - vue 인스턴스 내부에서 라우터 인스턴스에 $router로 접근할 수 있음
+
+   ```vue
+   // home으로 이동
+   methods :{
+   	moveToHome : function () {
+   		this.$router.push({ name : 'home' })
+   }
+   }
+   ```
+
+6. 동적 인자 전달
+
+   - `this.$route.params`
+
+7. Components $ Views
+
+   - App.vue
+     - 최상위 컴포넌트
+   - views/
+     - router(index.js)에 매핑되는 컴포넌트를 모아두는 폴더
+     - ex) App 컴포넌트 내부에 AboutView & HomeView 컴포넌트 등록
+   - components/
+     - router에 매핑된 컴포넌트 내부에 작성하는 컴포넌트를 모아두는 폴더
+     - ex) Home 컴포넌트 내부에 HelloWorld 컴포넌트 등록
 
 
 
