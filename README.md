@@ -2,7 +2,7 @@
 
 - [알고리즘](#algorithim)
 
-- [Vue](#Vue-project)
+- [Vue](#Vue)
 
 
 
