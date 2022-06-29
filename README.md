@@ -41,6 +41,7 @@
 
 | 날짜     | 분류                              | 내용                                                         |
 | -------- | --------------------------------- | ------------------------------------------------------------ |
+| 22.06.30 | vue/todo_pjt                      | live강의 : todo 만들기 (local storage 적용부터 에러발생.. 문제해결 불가...) |
 | 22.06.28 | vue/이론정리<br />vue/youtube_pjt | vue  props & emit, router<br />youtube pjt practice (아직 미완성) |
 | 22.06.27 | vue/이론정리                      | vue basic syntax와 SPA, CSR, SSR                             |
 
